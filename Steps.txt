@@ -1,0 +1,234 @@
+i m continuing with the ninth tutorial!!
+
+command to log in:  sqlplus "SYS/ as SYSDBA"
+
+Tutorial_9:
+----------------------------------------------------------------------------------------
+ What is archive log mode and how to enable it.
+            some commands:
+                          archive log list;
+                          alter database archivelog;
+                          select log_mode from v$database;
+start archive logging:    alter system archive log start;
+stop archive logging:     alter system archive log stop;
+force archiving of all log files: alter system archive log all;
+force archiving of the current log files: alter system archive log current;
+
+ARCHIVELOG mode is a mode that you can put the database in for creating a backup of all trans
+actions that have occurred in the database so that you can recover to any point in time.
+
+NOARCHIVELOG mode is basically the absence of ARCHIVELOG mode and has the disadvantage of not
+being able to recover to any point in time. NOARCHIVELOG mode does have the advantage of not
+having to write transactions to an archive log and thus increases the performance of the 
+database slightly.            
+
+
+-----------------------------------------------------------------------------------------------
+
+Tutorial_10:
+
+-----------------------------------------------------------------------------------------------
+Single Row Functions
+
+
+SQL functions are divided into two categories 
+1st is Single Row Functions 
+And another one is
+Multiple row function which is also known as aggregate functions.
+ But in today's SQL tutorial we will concentrate on Single Row Functions.
+Single-row functions operate on one row at a time and return one row of output for each input row. 
+
+Single row functions are capable of manipulating data items and modifying the data types. 
+Single row functions return one result per row and act on each row that is returned.
+Single row functions can accept one or more arguments and return one value.
+These arguments can be a column or an expression.
+With oracle we have 5 types of Single Row Functions 
+1. Character Functions
+2. Number Functions
+3. General Functions
+4. Conversion Functions and
+5. Date Functions.
+Character Functions are further divided into two categories.
+1st is Case- manipulation functions 
+ and 
+2nd is Character Manipulation functions.
+ 
+We have 3 case manipulation functions Lower, upper and initcap
+and 7 character manipulation functions Sql functions concat, substr, length, instr, lpad, rpad, trim
+ and replace.
+
+
+
+
+Character functions - Accepts character input and returns number or character value. Functions under
+ the category are CONCAT, LENGTH, SUBSTR, INSTR, LPAD, RPAD, TRIM and REPLACE.
+
+CONCAT function concatenates two string values.
+
+LENGTH function returns the length of the input string.
+
+SUBSTR function returns a portion of a string from a given start point to an end point.
+
+INSTR function returns numeric position of a character or a string in a given string.
+
+LPAD and RPAD functions pad the given string upto a specific length with a given character.
+
+TRIM function trims the string input from the start or end.
+
+REPLACE function replaces characters from the input string with a given character.
+
+Character functions
+The SELECT query below demonstrates the use of CONCAT function to concatenate two string values.
+
+SELECT CONCAT (first_name, last_name) 
+FROM employees
+WHERE rownum < 5;
+
+CONCAT(FIRST_NAME,LAST_NAME)
+--------------------------------
+EllenAbel
+SundarAnde
+MozheAtkinson
+DavidAustin
+
+----------------------------------------------------------------------------------------------------
+
+Tutorial_12
+
+------------------------------------------------------------------------------------------------------
+SQL Concat () function concatenates two separate character string into one character string.
+Let's see the syntax
+Concat (string_1 , String_2)
+Note here that SQL Concat function takes only two arguments at a time.
+This SQL Concat function will return string_1 concatenated with string_2. 
+This also means that it will return a single string which is a combined string of parameter String_1 and 
+String_2.
+Both the parameters of SQL Concat function String_1 and string_2 can be of any data-type. You can even 
+specify the columns of the table here. 
+SQL Concat function is equivalent to the concatenation operator (||). 
+SQL concatenation operator is represented by double solid vertical bars or we can say double pipe signs.
+
+Question: How to concatenate more than two strings as SQL Concat that can have only 2 parameters and what is 
+the difference between SQL Concat Function and SQL concatenation operator?
+The one answer for the second Question 
+What is the Difference between SQL Concat Function and SQL concatenation operator? Is
+While SQL Concat function takes only two parameters, The Concat operator can be repeated as often as is necessary. 
+Meaning, by the help of SQL Concat operator you can combine as many strings as you want.
+And Concatenation operator is also not supported by several databases such as SQL server so this might cause
+ problem.
+To answer the first question
+How to concatenate more than two strings as SQL Concat that can have only 2 parameters?
+We will have to jump over SQL developer.
+Let's see some examples.
+Say we want to retrieve the full name of an employee from Employees table.
+Let's try it using SQL Concat function.
+SELECT Concat (first_name, last_name) AS "Full Name" FROM employees;
+Here in this query we use two column names - first_name and last_name as arguments of our Concat function 
+Execute.
+As you can see here, we get full name of our employee but there is no space in between first name and last name. 
+We will see how to format this string using SQL Concat function in a few seconds 
+But before that, 
+let's see how to do the same task using SQL concatenation operator.
+SELECT first_name ||last_name AS "Full name" FROM employees;
+As you can see this query also produces the same result.
+Now we will see how to format full name of employees 
+First we will do this using SQL concatenation Operator.
+SELECT first_name||' '||last_name AS "Full name" FROM employees;
+Now you can see we get space between first name and last name of the employee.
+Again, let's do it using SQL Concat function.
+Here we will see the nested function concept where we will be using nested Concat function to achieve this formatted 
+string.
+SELECT Concat (Concat (first_name, ' '), last_name) FROM employees;
+Inner Concat function has two parameters. These are our first column name first_name and an empty string which will 
+be a space between first name and second name. 
+This Concat will now return a string which is the first name with space.
+This returning string will be the first input of our Outer Concat and column last_name will be the second input.
+All together this will give us the desired output.
+As you can see this method is complex than the first one where we use SQL concatenation operator.
+
+Tutorial_13:
+-----------------------------------------------------------------------------------------------------------------------
+Substr (source_string, start_pos, Substr_length)
+As we can see SQL substr function takes 3 parameters. First one is Source string from which you want to extract the 
+segment.
+Second parameter is Starting position for sub string from the Source string.
+And the third parameter is Substr_length which is the length for the substring.
+First two parameters are mandatory to specify while third one is optional.
+So we can say.
+SQL Substr function will return a sub string of a specified length from the source string beginning at a given position.
+First parameter source string can be of any data type CHAR, VARCHAR2, NCHAR, NVARCHAR2, CLOB, or NCLOB whereas both 
+start_pos, Substr_length parameters must be number data type.
+The returning result of SQL Substr function is of same data type of source string.
+Let's see an example of SQL Substr function.
+SELECT substr('www.RebellionRider.com',5,14) FROM dual;
+Here in this query url of my website www.RebellionRider.com is our source string with the total length of 22 characters, 
+Now, I want to extract the name of my website that is, RebellionRider. So if you count the total length of the name of
+ the website, it is 14. 
+That's why I have specified 14 as my third parameter of SQL Substr function which is substr_length. 
+Also the name of the website RebellionRider is starting from 5th position therefore I have specified 5 at second parameter
+ of SQL substr function which is strt_pos or starting position.
+Execute it.
+Here is our result RebellionRider
+
+When starting position is larger than the length of source string.
+In this case SQL Substr function will return NULL as a result.
+Let's do an example.
+SELECT substr('www.RebellionRider.com',23,14) FROM dual;
+As you can see here I have specified 23 at starting position and the total length of our source string is 22 characters 
+Let's execute
+And the result is Null.
+Second scenario
+When the Substr_length is greater than source string
+In this case the segment return is the substring from starting position to the end of the string. 
+For example
+SELECT substr('www.RebellionRider.com',5,23) FROM dual;
+Our starting position is at 5 means at the first R of RebellionRider and length of substring is set to 23 which is greater
+ than the length of source string that is 22.
+Execute.
+As you can see we get a substring from first R of RebellionRider till the end of the source String.
+
+Third scenario
+When you supply numeric or arithmetic expression or a DATE instead of character as Source string to SQL Substr function
+In this scenario 
+If you have supplied a numeric string instead of character as source string, the oracle engine casts them as a character 
+when they occur as parameter to SQL Substr function.
+And if you have supplied Arithmetic expression or a DATE then 
+The Oracle engine first solves or evaluates the Arithmetic expression or the DATE
+Then casts them as a character.
+Means if you have arithmetic expression in your source string then oracle will first solve it and then change or say cast
+ the value of its result into character.
+Let's see some example.
+SELECT substr(50000-7,2,4) FROM dual;
+Oracle first evaluates the arithmetic expression that is
+50000-7 equals to 49993. And then oracle engine casts this result 49993 into a character string. Means 49993 will be a 5 
+characters string.
+Starting position of substring is 2, that means from the first 9 of 49993
+We specified the length of substring is 4 so we must get 9993 as our result. 
+--------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
